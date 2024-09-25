@@ -15,6 +15,46 @@ public class Irrgarten {
      */
     public static void main(String[] args) {
         System.out.println("Hello world");
+        
+        // Prueba de enums
+        GameCharacter player = GameCharacter.PLAYER;
+        
+        System.out.println(player);
+        
+        Directions dir = Directions.DOWN;
+        
+        Orientation or = Orientation.HORIZONTAL;
+        
+        // Prueba weapon
+        System.out.println("Prueba clase weapon:");
+        Weapon weapon = new Weapon(2f, 2);
+        
+        System.out.println(weapon.toString());
+        
+        System.out.println(weapon.attack());
+        System.out.println(weapon.toString());
+
+        System.out.println(weapon.attack());
+        System.out.println(weapon.toString());
+
+        System.out.println(weapon.attack());
+        System.out.println(weapon.toString());
+
+        // Prueba clase Shield
+        System.out.println("Prueba clase shield:");
+        Shield shield = new Shield(2f, 2);
+        
+        System.out.println(shield.toString());
+        
+        System.out.println(shield.protect());
+        System.out.println(shield.toString());
+
+        System.out.println(shield.protect());
+        System.out.println(shield.toString());
+
+        System.out.println(shield.protect());
+        System.out.println(shield.toString());
+        
     }
     
 }
