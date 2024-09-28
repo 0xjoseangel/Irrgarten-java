@@ -5,7 +5,9 @@
 package irrgarten;
 
 /**
- *
+ * La enumeración Orientation define los dos tipos de desplazamientos existentes en el juego.
+ * Estos desplazamientos son: vertical y horizontal.
+ * 
  * @author joseangel
  */
 public enum Orientation {
