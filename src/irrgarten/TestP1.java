@@ -80,48 +80,47 @@ public class TestP1 {
      */
     private static void testDiceClass() {
         System.out.println("Prueba clase Dice:");
-        Dice dice = new Dice();
         
         // Llamamos a cada método 100 veces 
         for (int i = 0; i < 100; i++) {
             System.out.print("[ " + (i + 1) + "] RandomPos(10): ");
-            System.out.println(dice.randomPos(10));
+            System.out.println(Dice.randomPos(10));
             
             System.out.print("[ " + (i + 1) + "] whoStarts(10): ");
-            System.out.println(dice.whoStarts(10));
+            System.out.println(Dice.whoStarts(10));
             
             System.out.print("[ " + (i + 1) + "] randomIntelligence: ");
-            System.out.println(dice.randomIntelligence());
+            System.out.println(Dice.randomIntelligence());
             
             System.out.print("[ " + (i + 1) + "] randomStrength: ");
-            System.out.println(dice.randomStrength());
+            System.out.println(Dice.randomStrength());
             
             System.out.print("[ " + (i + 1) + "] resurrectPlayer: ");
-            System.out.println(dice.resurrectPlayer());
+            System.out.println(Dice.resurrectPlayer());
             
             System.out.print("[ " + (i + 1) + "] weaponsReward: ");
-            System.out.println(dice.weaponsReward());
+            System.out.println(Dice.weaponsReward());
             
             System.out.print("[ " + (i + 1) + "] shieldsReward: ");
-            System.out.println(dice.shieldsReward());
+            System.out.println(Dice.shieldsReward());
             
             System.out.print("[ " + (i + 1) + "] healthReward: ");
-            System.out.println(dice.healthReward());
+            System.out.println(Dice.healthReward());
             
             System.out.print("[ " + (i + 1) + "] weaponPower: ");
-            System.out.println(dice.weaponPower());
+            System.out.println(Dice.weaponPower());
             
             System.out.print("[ " + (i + 1) + "] shieldPower: ");
-            System.out.println(dice.shieldPower());
+            System.out.println(Dice.shieldPower());
             
             System.out.print("[ " + (i + 1) + "] usesLeft: ");
-            System.out.println(dice.usesLeft());
+            System.out.println(Dice.usesLeft());
             
             System.out.print("[ " + (i + 1) + "] intensity(0.5f): ");
-            System.out.println(dice.intensity(0.5f));
+            System.out.println(Dice.intensity(0.5f));
             
             System.out.print("[ " + (i + 1) + "] discardElement(3): ");
-            System.out.println(dice.discardElement(3)); 
+            System.out.println(Dice.discardElement(3)); 
         }
         
         System.out.println();

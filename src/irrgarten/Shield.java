@@ -14,8 +14,6 @@ package irrgarten;
 public class Shield {
     private float protection;  // Capacidad de protección del escudo
     private int uses;          // Número de usos restantes del escudo
-    private Dice dice; // Objeto de la clase Dice que implementa aleatoriedad
-
     
     /**
      * Constructor que inicializa un escudo con la cantidad de protección y usos proporcionados.
@@ -26,7 +24,6 @@ public class Shield {
     public Shield(float p, int u) {
         protection = p;
         uses = u;
-        dice = new Dice();
     }
     
     /**
@@ -65,6 +62,6 @@ public class Shield {
      * @return {@code true} si el elemento debe ser descartado, {@code false} en caso contrario.
      */
     public boolean discard() {
-        return dice.discardElement(uses);
+        return Dice.discardElement(uses);
     }
 }

@@ -14,7 +14,6 @@ package irrgarten;
 public class Weapon {
     private float power;  // Potencia de ataque del arma
     private int uses;     // Número de usos restantes del arma
-    private Dice dice; // Objeto de la clase Dice que implementa aleatoriedad
     
     /**
      * Constructor que inicializa un arma con la potencia de ataque y el número de usos especificados.
@@ -25,7 +24,6 @@ public class Weapon {
     public Weapon(float p, int u) {
         power = p;
         uses = u;
-        dice = new Dice();
     }
     
     /**
@@ -63,6 +61,6 @@ public class Weapon {
      * @return {@code true} si el elemento debe ser descartado, {@code false} en caso contrario.
      */
     public boolean discard() {
-        return dice.discardElement(uses);
+        return Dice.discardElement(uses);
     }
 }

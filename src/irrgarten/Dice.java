@@ -15,17 +15,17 @@ import java.util.Random;
  * @author joseangel
  */
 public class Dice {
-    private final int MAX_USES = 5; // Número máximo de usos de armas y escudos
-    private final float MAX_INTELIGENCE = 10f; // Valor máximo para la inteligencia de jugadores y monstruos
-    private final float MAX_STRENGTH = 10f; // Valor máximo para la fuerza de jugadores y monstruos
-    private final float RESURRECT_PROB = 0.3f; // Probabilidad de que un jugador sea resucitado en cada turno
-    private final int WEAPONS_REWARD = 2; // Número máximo de armas recibidas al ganar un combate
-    private final int SHIELDS_REWARD = 3; // Número máximo de escudos recibidos al ganar un combate
-    private final int HEALTH_REWARD = 5; // Número máximo de unidades de salud recibidas al ganar un combate
-    private final int MAX_ATTACK = 3; // Máxima potencia de las armas
-    private final int MAX_SHIELD = 2; // Máxima potencia de los escudos
+    private static final int MAX_USES = 5; // Número máximo de usos de armas y escudos
+    private static final float MAX_INTELIGENCE = 10f; // Valor máximo para la inteligencia de jugadores y monstruos
+    private static final float MAX_STRENGTH = 10f; // Valor máximo para la fuerza de jugadores y monstruos
+    private static final float RESURRECT_PROB = 0.3f; // Probabilidad de que un jugador sea resucitado en cada turno
+    private static final int WEAPONS_REWARD = 2; // Número máximo de armas recibidas al ganar un combate
+    private static final int SHIELDS_REWARD = 3; // Número máximo de escudos recibidos al ganar un combate
+    private static final int HEALTH_REWARD = 5; // Número máximo de unidades de salud recibidas al ganar un combate
+    private static final int MAX_ATTACK = 3; // Máxima potencia de las armas
+    private static final int MAX_SHIELD = 2; // Máxima potencia de los escudos
     
-    private Random generator = new Random();
+    public static final Random generator = new Random();
     
     /** 
      * Devuelve una posición aleatoria (fila o columna) en el tablero, basada 
@@ -34,7 +34,7 @@ public class Dice {
      * @param max El número total de filas o columnas del tablero. Debe ser mayor que 0.
      * @return Un número entero aleatorio entre 0 (inclusive) y max (exclusivo).
      */
-    public int randomPos(int max) {
+    public static int randomPos(int max) {
         return generator.nextInt(max);
     }
     
@@ -44,7 +44,7 @@ public class Dice {
      * @param nplayers El número de jugadores en la partida. Debe ser mayor que 0.
      * @return Un número entero aleatorio entre 0 (inclusive) y nplayers (exclusivo).
      */
-    public int whoStarts(int nplayers) {
+    public static int whoStarts(int nplayers) {
         return generator.nextInt(nplayers);
     }
     
@@ -54,7 +54,7 @@ public class Dice {
      * @return Un valor de inteligencia entre 0 (inclusive) y el valor máximo 
      * definido por MAX_INTELIGENCE (exclusivo).
      */
-    public float randomIntelligence() {
+    public static float randomIntelligence() {
         return generator.nextFloat() * MAX_INTELIGENCE;
     }
     
@@ -64,7 +64,7 @@ public class Dice {
      * @return Un valor de fuerza entre 0 (inclusive) y el valor máximo definido 
      * por MAX_STRENGTH (exclusivo).
      */
-    public float randomStrength() {
+    public static float randomStrength() {
         return generator.nextFloat() * MAX_STRENGTH;
     }
     
@@ -73,7 +73,7 @@ public class Dice {
      * 
      * @return Un valor booleano que indica si el jugador es resucitado (true) o no (false).
      */
-    public boolean resurrectPlayer() {
+    public static boolean resurrectPlayer() {
         return generator.nextFloat() < RESURRECT_PROB; // nextFloat() devuelve un numero entre 0.0 y 1.0
     }
     
@@ -82,7 +82,7 @@ public class Dice {
      * 
      * @return Un número entero entre 0 (inclusive) y WEAPONS_REWARD (exclusivo).
      */
-    public int weaponsReward() {
+    public static int weaponsReward() {
         return generator.nextInt(WEAPONS_REWARD);
     }
     
@@ -91,7 +91,7 @@ public class Dice {
      * 
      * @return Un número entero entre 0 (inclusive) y SHIELDS_REWARD (exclusivo).
      */
-    public int shieldsReward() {
+    public static int shieldsReward() {
         return generator.nextInt(SHIELDS_REWARD);
     }
     
@@ -100,7 +100,7 @@ public class Dice {
      * 
      * @return Un número entero entre 0 (inclusive) y HEALTH_REWARD (exclusivo).
      */
-    public int healthReward() {
+    public static int healthReward() {
         return generator.nextInt(HEALTH_REWARD);
     }
     
@@ -109,7 +109,7 @@ public class Dice {
      * 
      * @return Un valor de potencia de arma entre 0 (inclusive) y MAX_ATTACK (exclusivo).
      */
-    public float weaponPower() {
+    public static float weaponPower() {
         return generator.nextFloat() * MAX_ATTACK;
     }
     
@@ -118,7 +118,7 @@ public class Dice {
      * 
      * @return Un valor de potencia de escudo entre 0 (inclusive) y MAX_SHIELD (exclusivo).
      */
-    public float shieldPower() {
+    public static float shieldPower() {
         return generator.nextFloat() * MAX_SHIELD;
     }
     
@@ -127,7 +127,7 @@ public class Dice {
      * 
      * @return Un número entero entre 0 (inclusive) y MAX_USES (exclusivo).
      */
-    public int usesLeft() {
+    public static int usesLeft() {
         return generator.nextInt(MAX_USES);
     }
     
@@ -137,7 +137,7 @@ public class Dice {
      * @param competence El valor de competencia que limita el valor aleatorio generado.
      * @return Un valor flotante entre 0 (inclusive) y competence (exclusivo).
      */
-    public float intensity(float competence) {
+    public static float intensity(float competence) {
         return generator.nextFloat() * competence;
     }
     
@@ -147,7 +147,7 @@ public class Dice {
      * @param usesLeft El número de usos restantes del elemento. Debe ser mayor o igual a 0.
      * @return {@code true} si el elemento debe ser descartado, {@code false} en caso contrario.
      */
-    public boolean discardElement(int usesLeft) {
+    public static boolean discardElement(int usesLeft) {
         // Si usesLeft es 0, siempre descartamos el elemento
         if (usesLeft == 0) {
             return true;
