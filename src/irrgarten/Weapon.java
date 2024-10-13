@@ -63,4 +63,10 @@ public class Weapon {
     public boolean discard() {
         return Dice.discardElement(uses);
     }
+    
+    // Preguntar si hay que anadirlo
+    
+    public float getPower() {
+        return power;
+    }
 }
