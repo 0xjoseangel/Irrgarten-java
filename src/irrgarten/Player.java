@@ -61,13 +61,7 @@ public class Player {
   }
 
   public float attack() {
-    float sumWeapons = 0;
-
-    for (Weapon w : weapons) {
-      // Preguntar sobre el metodo getPower !!!!
-      sumWeapons = w.getPower();
-    }
-    return sumWeapons + strength;
+    return this.sumWeapons() + this.strength;
   }
 
   public boolean defend(float recivedAttack) {
@@ -76,12 +70,68 @@ public class Player {
   }
 
   public String toString() {
-    System.out.println(this.name);
-    System.out.println("Intelegence: " + this.intelligence);
-    System.out.println("Strength: " + this.strength);
-    System.out.println("health:" + this.health);
-    System.out.println("Coordenadas: " + "[" + this.row + "]");
-    System.out.println("Golpes consecutivos: " + this.consecutiveHits);
+    String rdo = this.name + "\n" +
+                 "Intelegence: " + this.intelligence + "\n" +
+                 "Strength: " + this.strength + "\n" + 
+                 "Health:" + this.health + "\n" +
+                 "Coordenadas: " + "[" + this.row + ", " + this.col + "]" + "\n" +
+                 "Golpes consecutivos: " + this.consecutiveHits + "\n";
+          
+    return rdo;
+  } 
+  
+  private Weapon newWeapon() {
+    Weapon newWeapon = new Weapon(Dice.weaponPower(), Dice.usesLeft());
+    
+    return newWeapon;   
   }
+  
+  private Shield newShield() {
+    Shield newShield = new Shield(Dice.shieldPower(), Dice.usesLeft());
+    
+    return newShield;   
+  }
+  
+  private float defensiveEnergy() {
+    return this.sumShields() + this.intelligence;
+  }
+  
+  private void resetHits() {
+      this.consecutiveHits = 0;
+  }
+  
+  private void gotWounded() {
+      this.health--;
+  }
+  
+  private void incConsecutiveHits() {
+      this.consecutiveHits--;
+  }
+  
+  private float sumWeapons() {
+    float sumWeapons = 0;
 
+    for (Weapon w : this.weapons) {
+      sumWeapons = w.attack();
+    }
+    return sumWeapons;
+  }
+  
+  private float sumShields() {
+    float sumShields = 0;
+
+    for (Shield s : this.shields) {
+      sumShields = s.protect();
+    }
+    return sumShields;
+  }
+  
+//  De los siguientes métodos:
+//    • Directions move(Directions direction,ArrayList<Directions> validMoves)
+//    • void receiveReward()
+//    • void receiveWeapon(Weapon w)
+//    • void receiveShield(Shield s)
+//    • boolean manageHit(float receivedAttack)
+//  recibirás información en la siguiente práctica.
 }
+ 
