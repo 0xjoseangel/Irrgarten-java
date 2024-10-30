@@ -129,6 +129,52 @@ public class Player {
            "Golpes consecutivos: " + this.consecutiveHits + "\n";
   } 
   
+  public Directions move (Directions direction, ArrayList<Directions> validMoves) {
+      int size = validMoves.size();
+      boolean contained = validMoves.contains(direction);
+      
+      Directions rdo;
+      
+      if (size > 0 && !contained) {
+          rdo = validMoves.get(0);
+      }
+      else {
+          rdo = direction;
+      }
+      
+      return rdo;
+  }
+  
+  public void reciveReward() {
+      int wReward = Dice.weaponsReward();
+      int sReward = Dice.shieldsReward();
+      
+      for (int i=0; i<wReward; i++) {
+          Weapon wnew = newWeapon();
+          // Funcion recive weapon ...
+      }
+      
+        for (int i=0; i<wReward; i++) {
+          Shield snew = newShield();
+          // Funcion recive weapon ...
+      }
+      int extraHealth = Dice.healthReward();
+      
+      this.health += extraHealth;
+  }
+  
+  private void reciveWeapon(Weapon w) {
+      // Comprobamos si hay algun elemento para eliminar
+      for (Weapon wi : this.weapons) {
+          boolean discard = wi.discard();
+          
+          if (discard) {
+              this.weapons.remove(wi);
+          }
+      }
+      
+      // Falta completar ...
+  }
   /**
    * Genera una nueva arma utilizando valores aleatorios.
    * 
@@ -205,11 +251,4 @@ public class Player {
     return sumShields;
   }
   
-//  De los siguientes métodos:
-//    • Directions move(Directions direction, ArrayList<Directions> validMoves)
-//    • void receiveReward()
-//    • void receiveWeapon(Weapon w)
-//    • void receiveShield(Shield s)
-//    • boolean manageHit(float receivedAttack)
-//  recibirás información en la siguiente práctica.
 }
