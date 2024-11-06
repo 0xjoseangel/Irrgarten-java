@@ -151,12 +151,12 @@ public class Player {
       
       for (int i=0; i<wReward; i++) {
           Weapon wnew = newWeapon();
-          // Funcion recive weapon ...
+          reciveWeapon(wnew);
       }
       
         for (int i=0; i<wReward; i++) {
           Shield snew = newShield();
-          // Funcion recive weapon ...
+          reciveShield(snew);
       }
       int extraHealth = Dice.healthReward();
       
@@ -172,8 +172,52 @@ public class Player {
               this.weapons.remove(wi);
           }
       }
+      int size = this.weapons.size();
       
-      // Falta completar ...
+      // Lo añadimos si cabe
+      if (size < Player.MAX_WEAPONS) {
+          this.weapons.add(w);
+      }
+  }
+  
+  private void reciveShield(Shield s) {
+      // Comprobamos si hay algun elemento para eliminar
+      for (Shield si : this.shields) {
+          boolean discard = si.discard();
+          
+          if (discard) {
+              this.shields.remove(si);
+          }
+      }
+      int size = this.shields.size();
+      
+      // Lo añadimos si cabe
+      if (size < Player.MAX_SHIELDS) {
+          this.shields.add(s);
+      }
+  }
+  
+  private boolean manageHit(float recivedAttack) {
+      boolean lose;
+      float defense = defensiveEnergy();
+      
+      if (defense < recivedAttack) {
+          gotWounded();
+          incConsecutiveHits();
+      }
+      else {
+          resetHits();
+      }
+      
+      if (this.consecutiveHits == Player.HITS2LOSE || dead()) {
+          resetHits();
+          lose = true;
+      }
+      else {
+          lose = false;
+      }
+      
+      return lose;
   }
   /**
    * Genera una nueva arma utilizando valores aleatorios.
