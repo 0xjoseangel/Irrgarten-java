@@ -44,7 +44,7 @@ public class Game {
         this.currentPlayer = this.players.get(currentPlayerIndex);
         
         // Creamos el laberinto
-        this.labyrinth = new Labyrinth(5, 5, 3, 3);
+        this.labyrinth = new Labyrinth(10, 10, 8, 8);
         
         // Aqui se usa el metodo para configurar el laberinto...
         
@@ -70,40 +70,137 @@ public class Game {
         return new GameState(labyrinth.toString(), players, monsters, this.currentPlayerIndex, this.finished(), this.log);
     }
     
+    public boolean nesxtStep(Directions preferredDirection) {
+        String log = "";
+        GameCharacter winner;
+        
+        boolean dead = this.currentPlayer.dead();
+        
+        if (!dead) {
+            Directions direction = actualDirection(preferredDirection);
+            
+            if (direction != preferredDirection) {
+                logPlayerNoOrders();
+            }
+            
+            Monster monster = this.labyrinth.putPlayer(direction, currentPlayer);
+            
+            if (monster == null) {
+                logNoMonster();
+            }
+            else {
+                winner = combat(monster);
+                manageReward(winner);
+            }
+            
+            manageResurrection();
+        }
+        
+        boolean endGame = finished();
+        
+        if (!endGame) {
+            nextPlayer();
+        }
+        
+        return endGame;
+    }
     
-    // El diseno corresponde al siguiente laberinto
-    // Hasta que no se implementen algunas funciones, carece de funcionalidad
-//    X X X X X
-//    X - - M X
-//    X - X - X
-//    X E - - X
-//    X X X X X
-
-//    public void configureLabyrinth() {
-//        // Configurar bordes como obstáculos
-//        for (int row = 0; row < 5; row++) {
-//            labyrinth.addBlock(Orientation.HORIZONTAL, row, 0, 5); // Lado izquierdo y derecho
-//            labyrinth.addBlock(Orientation.HORIZONTAL, row, 4, 5); // Lado derecho
-//        }
-//        for (int col = 0; col < 5; col++) {
-//            labyrinth.addBlock(Orientation.VERTICAL, 0, col, 5); // Lado superior
-//            labyrinth.addBlock(Orientation.VERTICAL, 4, col, 5); // Lado inferior
-//        }
-//
-//        // Configurar obstáculos internos
-//        labyrinth.addBlock(Orientation.HORIZONTAL, 2, 2, 1); // Muro en el centro
-//
-//        // Colocar salida en (3, 1)
-//        labyrinth.setExitPosition(3, 1);
-//
-//        // Añadir un monstruo en (1, 3)
-//        labyrinth.addMonster(1, 3, this.monsters.get(0));
-//
-//        // Imprimir la configuración final del laberinto
-//        System.out.println(labyrinth.toString());
-//    }
     
 
+
+   public void configureLabyrinth() {
+    // Crear un laberinto más grande (por ejemplo, 10x10)
+    int rows = 10;
+    int cols = 10;
+    
+    // Configurar bordes como obstáculos
+    for (int row = 0; row < rows; row++) {
+        labyrinth.addBlock(Orientation.HORIZONTAL, row, 0, cols); // Lado izquierdo
+        labyrinth.addBlock(Orientation.HORIZONTAL, row, cols - 1, cols); // Lado derecho
+    }
+    for (int col = 0; col < cols; col++) {
+        labyrinth.addBlock(Orientation.VERTICAL, 0, col, rows); // Lado superior
+        labyrinth.addBlock(Orientation.VERTICAL, rows - 1, col, rows); // Lado inferior
+    }
+
+    // Configurar obstáculos internos de forma aleatoria y en posiciones clave
+    labyrinth.addBlock(Orientation.HORIZONTAL, 2, 3, 5); // Muro horizontal grande
+    labyrinth.addBlock(Orientation.VERTICAL, 4, 2, 4);   // Muro vertical
+    labyrinth.addBlock(Orientation.HORIZONTAL, 6, 5, 3); // Otro muro horizontal
+    labyrinth.addBlock(Orientation.VERTICAL, 7, 7, 2);   // Otro muro vertical
+
+    // Añadir monstruos en diferentes posiciones
+    labyrinth.addMonster(1, 1, this.monsters.get(0)); // Monstruo fácil
+    labyrinth.addMonster(3, 5, this.monsters.get(1)); // Monstruo intermedio
+    labyrinth.addMonster(6, 8, this.monsters.get(2)); // Monstruo difícil
+    labyrinth.addMonster(9, 2, this.monsters.get(0)); // Monstruo fácil
+
+    // Añadir caminos secretos para hacer más interesante la exploración
+    labyrinth.addBlock(Orientation.HORIZONTAL, 3, 4, 1);  // Pared falsa que puede ser atravesada
+    labyrinth.addBlock(Orientation.VERTICAL, 6, 4, 1);    // Otra pared falsa
+
+    // Imprimir la configuración final del laberinto
+    System.out.println(labyrinth.toString());
+}
+
+    
+    private Directions actualDirection(Directions preferredDirection) {
+        int currentRow = this.currentPlayer.getRow();
+        int currentCol = this.currentPlayer.getCol();
+        
+        ArrayList<Directions> validMoves =  this.labyrinth.validMoves(currentCol, currentRow);
+        
+        return this.currentPlayer.move(preferredDirection, validMoves);
+    }
+    
+    private GameCharacter combat(Monster monster) {
+        int rounds = 0;
+        GameCharacter winner = GameCharacter.PLAYER;
+        
+        float playerAttack = this.currentPlayer.attack();
+        boolean lose = monster.defend(playerAttack);
+        
+        while (!lose && (rounds < MAX_ROUNDS)) {
+            winner = GameCharacter.MONSTER;
+            rounds++;
+            
+            float monsterAttack = monster.attack();
+            lose = this.currentPlayer.defend(monsterAttack);
+            
+            if (!lose) {
+                playerAttack = this.currentPlayer.attack();
+                winner = GameCharacter.PLAYER;
+                lose = monster.defend(playerAttack);
+            }
+        }
+        logRounds(rounds , MAX_ROUNDS);
+        
+        return winner;
+        
+    }
+    
+    private void manageResurrection() {
+        boolean resurrect = Dice.resurrectPlayer();
+        
+        if (resurrect) {
+            currentPlayer.resurrect();
+            logResurrected();
+        }
+        else {
+            logPlayerSkipTurn();
+        }
+    }
+    
+    private void manageReward(GameCharacter winner) {
+        if (winner == GameCharacter.PLAYER) {
+            currentPlayer.reciveReward();
+            logPlayerWon();
+        }
+        else {
+            logMonsterWon();
+        }
+    }
+    
     private void nextPlayer() {
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.size();
         this.currentPlayer = this.players.get(this.currentPlayerIndex);

@@ -62,6 +62,18 @@ public class Player {
     this.row = this.INITIAL_POS;
     this.col = this.INITIAL_POS;
   }
+  
+  public int getCol() {
+      return this.col;
+  }
+  
+  public int getRow() {
+      return this.row;
+  }
+  
+  public char getNumber() {
+      return this.number;
+  }
 
   /**
    * Resucita al jugador si está muerto. Reinicia su salud, golpes consecutivos y vacía las listas de armas y escudos.

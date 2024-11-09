@@ -98,15 +98,22 @@ public class Monster {
     }
 
     /**
-     * Método de defensa del monstruo.
+     * Defiende al personaje de un ataque recibido. Evalúa si el ataque es lo suficientemente 
+     * fuerte para herir al personaje, basándose en su inteligencia como parámetro de resistencia.
+     * Si el personaje es herido, se verifica si esto lo mata.
      * 
-     * En la versión actual no implementa ninguna lógica, 
-     * pero siempre devuelve true. Se espera que este método sea completado en prácticas futuras.
-     * 
-     * @param recivedAttack El valor del ataque recibido.
-     * @return true siempre.
+     * @param recivedAttack la intensidad del ataque recibido
+     * @return true si el personaje muere después de recibir el ataque, false si sigue vivo
      */
     public boolean defend(float recivedAttack) {
-        return true;
+        boolean isDead = dead();
+        
+        if (!isDead) {
+            if (Dice.intensity(intelligence) < recivedAttack) {
+                gotWounded();
+                isDead = dead();
+            }
+        }
+        return isDead;
     }
 }
