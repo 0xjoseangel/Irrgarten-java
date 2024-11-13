@@ -123,8 +123,7 @@ public class Player {
    * @return true si el jugador defendió exitosamente, false en caso contrario
    */
   public boolean defend(float recivedAttack) {
-    // Delega su funcionalidad al metodo manageHit
-    return true;
+      return this.manageHit(recivedAttack);
   }
 
   /**

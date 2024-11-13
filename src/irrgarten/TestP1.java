@@ -13,13 +13,13 @@ public class TestP1 {
    *
    * @param args Los argumentos de línea de comandos.
    */
-  public static void main(String[] args) {
-    testEnums();
-    testWeaponClass();
-    testShieldClass();
-    testDiceClass();
-    testGameState();
-  }
+//  public static void main(String[] args) {
+//    testEnums();
+//    testWeaponClass();
+//    testShieldClass();
+//    testDiceClass();
+//    testGameState();
+//  }
 
   /**
    * Prueba de enums utilizados en el juego.

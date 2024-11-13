@@ -138,11 +138,12 @@ public class Labyrinth {
         
         while (posOK(row, col) && emptyPos(row, col) && length > 0) {
             this.labyrinth[row][col] = BLOCK_CHAR;
+            length--;
+            row += incRow;
+            col += incCol;
         }
         
-        length--;
-        row += incRow;
-        col += incCol;
+        
     }
     
      /**
@@ -153,8 +154,8 @@ public class Labyrinth {
      * @return el monstruo en la posición nueva si hay combate, null si no lo hay
      */
     public Monster putPlayer(Directions direction, Player player) {
-        int oldRow = player.getCol();
-        int oldCol = player.getRow();
+        int oldRow = player.getRow();
+        int oldCol = player.getCol();
         
         int[] newPos = dir2Pos(oldRow, oldCol, direction);
         Monster monster = putPlayer2D(oldRow, oldCol, newPos[ROW], newPos[COL], player);
@@ -167,7 +168,7 @@ public class Labyrinth {
      * 
      * @param players arreglo de jugadores que se van a distribuir en el laberinto
      */
-    public void spreadPlayers(Player[] players) {
+    public void spreadPlayers(ArrayList<Player> players) {
         int[] pos;
         Monster monster;
         for (Player p : players) {
@@ -348,7 +349,7 @@ public class Labyrinth {
                 p = players[oldRow][oldCol];
                 if (p == player) {
                     updateOldPos(oldRow, oldCol);
-                    this.players[oldCol][oldRow] = null;
+                    this.players[oldRow][oldCol] = null;
                 }
                 
             }
