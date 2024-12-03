@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * 
  * @author joseangel
  */
-public class Player {
+public class Player extends LabyrinthCharacter {
   
   /** Número máximo de armas que puede llevar el jugador. */
   private static final int MAX_WEAPONS = 2;
@@ -19,23 +19,10 @@ public class Player {
   private static final int INITIAL_HEALTH = 10;
   /** Número de golpes consecutivos para perder. */
   private static final int HITS2LOSE = 3;
-  /** Posición inicial para las coordenadas del jugador (sin posición definida). */
-  private final int INITIAL_POS = -1;
 
-  /** Nombre del jugador. */
-  private String name;
-  /** Número identificador del jugador. */
+  
   private char number;
-  /** Nivel de inteligencia del jugador. */
-  private float intelligence;
-  /** Nivel de fuerza del jugador. */
-  private float strength;
-  /** Nivel de salud del jugador. */
-  private float health;
-  /** Fila en la que se encuentra el jugador en el laberinto. */
-  private int row;
-  /** Columna en la que se encuentra el jugador en el laberinto. */
-  private int col;
+  
   /** Contador de golpes consecutivos recibidos. */
   private int consecutiveHits;
 
@@ -53,23 +40,25 @@ public class Player {
    * @param strength nivel de fuerza del jugador
    */
   public Player(char number, float intelligence, float strength) {
+    super("Player #" + number, intelligence, strength, Player.INITIAL_HEALTH);
     this.number = number;
-    this.intelligence = intelligence;
-    this.strength = strength;
-    this.name = "Player #" + this.number;
     this.consecutiveHits = 0;
-    this.health = Player.INITIAL_HEALTH;
-    this.row = this.INITIAL_POS;
-    this.col = this.INITIAL_POS;
+    
+    this.weapons= new ArrayList<>();
+    this.shields= new ArrayList<>();
   }
   
-  public int getCol() {
-      return this.col;
-  }
-  
-  public int getRow() {
-      return this.row;
-  }
+    public Player (Player other){
+        super(other); 
+        this.number=other.number;
+        this.consecutiveHits=other.consecutiveHits;
+        
+    
+        this.weapons= new ArrayList<>(other.weapons);
+        this.shields= new ArrayList<>(other.shields);
+        
+        
+    }
   
   public char getNumber() {
       return this.number;
@@ -82,38 +71,21 @@ public class Player {
     if (dead()) {
       this.weapons.clear();
       this.shields.clear();
-      this.health = Player.INITIAL_HEALTH;
+      this.setHealth(Player.INITIAL_HEALTH);
       this.consecutiveHits = 0;
     }
   }
 
-  /**
-   * Modifica la posición del jugador en el laberinto.
-   * 
-   * @param row fila a la que se mueve el jugador
-   * @param col columna a la que se mueve el jugador
-   */
-  public void setPos(int row, int col) {
-    this.row = row;
-    this.col = col;
-  }
-
-  /**
-   * Verifica si el jugador está muerto, es decir, si su salud ha llegado a cero.
-   * 
-   * @return true si el jugador está muerto, false en caso contrario
-   */
-  public boolean dead() {
-    return health == 0;
-  }
+ 
 
   /**
    * Realiza un ataque sumando la fuerza del jugador y el poder de sus armas.
    * 
    * @return el valor total del ataque
    */
+  @Override
   public float attack() {
-    return this.sumWeapons() + this.strength;
+    return this.sumWeapons() + this.getStrength();
   }
 
   /**
@@ -122,6 +94,8 @@ public class Player {
    * @param recivedAttack el valor del ataque recibido
    * @return true si el jugador defendió exitosamente, false en caso contrario
    */
+  
+  @Override
   public boolean defend(float recivedAttack) {
       return this.manageHit(recivedAttack);
   }
@@ -131,12 +105,9 @@ public class Player {
    * 
    * @return el estado del jugador como cadena de texto
    */
+  @Override
   public String toString() {
-    return this.name + "\n" +
-           "Inteligencia: " + this.intelligence + "\n" +
-           "Fuerza: " + this.strength + "\n" + 
-           "Salud: " + this.health + "\n" +
-           "Coordenadas: " + "[" + this.row + ", " + this.col + "]\n" +
+    return super.toString() +
            "Golpes consecutivos: " + this.consecutiveHits + "\n";
   } 
   
@@ -165,13 +136,13 @@ public class Player {
           reciveWeapon(wnew);
       }
       
-        for (int i=0; i<wReward; i++) {
+        for (int i=0; i<sReward; i++) {
           Shield snew = newShield();
           reciveShield(snew);
       }
       int extraHealth = Dice.healthReward();
       
-      this.health += extraHealth;
+      this.setHealth(extraHealth);
   }
   
   private void reciveWeapon(Weapon w) {
@@ -253,8 +224,8 @@ public class Player {
    * 
    * @return la energía defensiva total
    */
-  private float defensiveEnergy() {
-    return this.sumShields() + this.intelligence;
+  protected float defensiveEnergy() {
+    return this.sumShields() + this.getIntelligence();
   }
   
   /**
@@ -264,12 +235,6 @@ public class Player {
     this.consecutiveHits = 0;
   }
   
-  /**
-   * Disminuye en uno la salud del jugador cuando es herido.
-   */
-  private void gotWounded() {
-    this.health--;
-  }
   
   /**
    * Incrementa el número de golpes consecutivos recibidos por el jugador.
@@ -283,7 +248,7 @@ public class Player {
    * 
    * @return la suma del poder de ataque de las armas
    */
-  private float sumWeapons() {
+  protected float sumWeapons() {
     float sumWeapons = 0;
 
     for (Weapon w : this.weapons) {
@@ -297,7 +262,7 @@ public class Player {
    * 
    * @return la suma del poder de defensa de los escudos
    */
-  private float sumShields() {
+  protected float sumShields() {
     float sumShields = 0;
 
     for (Shield s : this.shields) {

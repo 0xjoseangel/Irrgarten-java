@@ -168,7 +168,7 @@ public class Dice {
         return randomValue <= probability;
     }
     
-    public Directions nexstStep(Directions preference, ArrayList<Directions> validMoves, float intelligence) {
+    public static Directions nextStep(Directions preference, ArrayList<Directions> validMoves, float intelligence) {
         Directions rdo = preference;
         
           if(Dice.randomIntelligence()>intelligence){

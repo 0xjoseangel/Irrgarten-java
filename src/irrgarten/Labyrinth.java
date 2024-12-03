@@ -200,6 +200,13 @@ public class Labyrinth {
         return output;
     }
     
+    public void convertToFuzzy(FuzzyPlayer other){
+        int row=other.getRow();
+        int col=other.getCol();
+        if(this.players[row][col].getNumber() == other.getNumber())
+            this.players[row][col]=other;
+    }
+    
     /**
      * Verifica si una posición está dentro de los límites del laberinto.
      * 

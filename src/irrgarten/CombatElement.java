@@ -8,7 +8,7 @@ package irrgarten;
  *
  * @author joseangel
  */
-public class CombatElement {
+abstract public class CombatElement {
     private float effect;
     private int uses;
     
@@ -25,13 +25,14 @@ public class CombatElement {
         } else {
             result = 0f; // Si no hay más usos, el ataque no tiene potencia
         }
-        return effect;
+        return result;
     }
     
     public boolean discard() {
         return Dice.discardElement(uses);
     }
     
+    @Override
     public String toString() {
         return "[" + effect + ", " + uses + "]";
     }

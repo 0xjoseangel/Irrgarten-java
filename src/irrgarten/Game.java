@@ -195,15 +195,18 @@ public class Game {
     }
     
     private void manageResurrection() {
-        boolean resurrect = Dice.resurrectPlayer();
-        
-        if (resurrect) {
-            currentPlayer.resurrect();
-            logResurrected();
-        }
-        else {
-            logPlayerSkipTurn();
-        }
+       if (Dice.resurrectPlayer()){
+             
+            this.currentPlayer.resurrect();
+            this.logResurrected();
+            
+            //  fuzzyplayer...
+            FuzzyPlayer fuzzy= new FuzzyPlayer(this.currentPlayer);
+            this.players.set(this.currentPlayerIndex, fuzzy);
+            this.labyrinth.convertToFuzzy(fuzzy);
+        }            
+        else
+            this.logPlayerSkipTurn();
     }
     
     private void manageReward(GameCharacter winner) {
