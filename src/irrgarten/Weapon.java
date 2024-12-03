@@ -11,7 +11,7 @@ package irrgarten;
  * 
  * @author joseangel
  */
-public class Weapon {
+public class Weapon extends CombatElement{
     private float power;  // Potencia de ataque del arma
     private int uses;     // Número de usos restantes del arma
     
@@ -22,8 +22,7 @@ public class Weapon {
      * @param u El número de usos disponibles para el arma.
      */
     public Weapon(float p, int u) {
-        power = p;
-        uses = u;
+        super(p, u);
     }
     
     /**
@@ -33,14 +32,7 @@ public class Weapon {
      * @return La potencia de ataque si hay usos restantes, o 0 si se han agotado los usos.
      */
     public float attack() {
-        float result;
-        if (uses > 0) {
-            uses--; // Disminuir el número de usos en 1
-            result = power;
-        } else {
-            result = 0f; // Si no hay más usos, el ataque no tiene potencia
-        }
-        return result;
+       return this.produceEffect();
     }
     
     /**
@@ -51,16 +43,8 @@ public class Weapon {
      */
     @Override
     public String toString() {
-        String info = "W[" + power + ", " + uses + "]";
-        return info;
+        return "S" + super.toString();
     }
     
-    /**
-     * Implementa la decisión de si un arma debe ser descartada.
-     * 
-     * @return {@code true} si el elemento debe ser descartado, {@code false} en caso contrario.
-     */
-    public boolean discard() {
-        return Dice.discardElement(uses);
-    }
+
 }

@@ -5,6 +5,7 @@
 package irrgarten;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * La clase Dice proporciona varios métodos relacionados con la probabilidad y 
@@ -165,5 +166,16 @@ public class Dice {
 
         // Devolvemos true si el valor aleatorio es menor o igual a la probabilidad
         return randomValue <= probability;
+    }
+    
+    public Directions nexstStep(Directions preference, ArrayList<Directions> validMoves, float intelligence) {
+        Directions rdo = preference;
+        
+          if(Dice.randomIntelligence()>intelligence){
+            int indice=generator.nextInt(validMoves.size());
+            rdo=validMoves.get(indice);          
+        }
+        
+        return rdo;
     }
 }
