@@ -170,10 +170,10 @@ public class Labyrinth {
      */
     public void spreadPlayers(ArrayList<Player> players) {
         int[] pos;
-        Monster monster;
+        
         for (Player p : players) {
             pos = randomEmptyPos();
-            monster = putPlayer2D(-1, -1, pos[ROW], pos[COL], p);
+            putPlayer2D(-1, -1, pos[ROW], pos[COL], p);
         }
     }
     
@@ -302,18 +302,10 @@ public class Labyrinth {
         int[] newPos = {row, col};
         
         switch (direction) {
-            case LEFT:
-                newPos[COL]--;
-                break;
-            case RIGHT:
-                newPos[COL]++;
-                break;
-            case UP:
-                newPos[ROW]--;
-                break;
-            case DOWN:
-                newPos[ROW]++;
-                break;
+            case LEFT -> newPos[COL]--;
+            case RIGHT -> newPos[COL]++;
+            case UP -> newPos[ROW]--;
+            case DOWN -> newPos[ROW]++;
         }
         
         return newPos;

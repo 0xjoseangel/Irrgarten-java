@@ -18,7 +18,7 @@ abstract public class LabyrinthCharacter {
     private int row;
     private int col;
     
-    public LabyrinthCharacter (String name, float intelligence, float strenght, float health) {
+    public LabyrinthCharacter (String name, float intelligence, float strength, float health) {
         this.name = name;
         this.intelligence = intelligence;
         this.strength = strength;

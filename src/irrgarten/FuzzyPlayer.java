@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author joseangel
  */
-public class FuzzyPlayer extends Player{
+public class FuzzyPlayer extends Player {
     
  
     public FuzzyPlayer (Player other){

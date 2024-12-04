@@ -21,5 +21,7 @@ public class TestP3 {
         Controller controlador = new Controller(juego, vista);
 
         controlador.play();
+
+
     }
 }

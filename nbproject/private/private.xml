@@ -3,16 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/TestP3.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/Monster.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/GameState.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/UI/TextUI.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/TestP2.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/Game.java</file>
             <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/Labyrinth.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/Controller/Controller.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/Player.java</file>
-            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/TestP1.java</file>
+            <file>file:/home/joseangel/NetBeansProjects/Irrgarten/src/irrgarten/LabyrinthCharacter.java</file>
         </group>
     </open-files>
 </project-private>

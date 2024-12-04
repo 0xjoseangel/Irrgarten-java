@@ -27,9 +27,12 @@ public class Player extends LabyrinthCharacter {
   private int consecutiveHits;
 
   /** Lista de armas que lleva el jugador. */
-  private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+  private ArrayList<Weapon> weapons;
   /** Lista de escudos que lleva el jugador. */
-  private ArrayList<Shield> shields = new ArrayList<Shield>();
+  private ArrayList<Shield> shields;
+  
+  private ShieldCardDeck shieldCardDeck;
+  private WeaponCardDeck weaponCardDeck;
 
   /**
    * Constructor de la clase Player.
@@ -44,8 +47,11 @@ public class Player extends LabyrinthCharacter {
     this.number = number;
     this.consecutiveHits = 0;
     
-    this.weapons= new ArrayList<>();
-    this.shields= new ArrayList<>();
+    this.weapons= new ArrayList<Weapon>();
+    this.shields= new ArrayList<Shield>();
+    
+    this.shieldCardDeck  = new ShieldCardDeck();
+    this.weaponCardDeck = new WeaponCardDeck();
   }
   
     public Player (Player other){
@@ -54,9 +60,11 @@ public class Player extends LabyrinthCharacter {
         this.consecutiveHits=other.consecutiveHits;
         
     
-        this.weapons= new ArrayList<>(other.weapons);
-        this.shields= new ArrayList<>(other.shields);
+        this.weapons= new ArrayList<Weapon>(other.weapons);
+        this.shields= new ArrayList<Shield>(other.shields);
         
+        this.shieldCardDeck  = new ShieldCardDeck();
+        this.weaponCardDeck = new WeaponCardDeck();
         
     }
   
@@ -207,7 +215,7 @@ public class Player extends LabyrinthCharacter {
    * @return una nueva instancia de Weapon
    */
   private Weapon newWeapon() {
-    return new Weapon(Dice.weaponPower(), Dice.usesLeft());  
+    return this.weaponCardDeck.nextCard(); 
   }
   
   /**
@@ -216,7 +224,7 @@ public class Player extends LabyrinthCharacter {
    * @return una nueva instancia de Shield
    */
   private Shield newShield() {
-    return new Shield(Dice.shieldPower(), Dice.usesLeft());  
+    return this.shieldCardDeck.nextCard(); 
   }
   
   /**

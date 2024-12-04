@@ -38,7 +38,7 @@ public class Game {
         // Creamos los monstruos
         this.monsters = new ArrayList<Monster>();
         for(int i=0; i<=3; i++) {
-            this.monsters.add(new Monster("Monstruo " + i, Dice.randomIntelligence(), Dice.randomIntelligence()));
+            this.monsters.add(new Monster("Monstruo " + i, Dice.randomIntelligence(), Dice.randomStrength()));
         }
           
         // Empezara un jugador aleatorio
