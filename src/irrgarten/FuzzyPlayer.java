@@ -24,21 +24,15 @@ public class FuzzyPlayer extends Player {
         return Dice.nextStep(preference, validMoves, this.getIntelligence());
     }
     
-    /**
-     * Calcula ataque total del fuzzyplayer, teniendo en cuenta su fuerza y el poder
-     * de sus armas
-     * @return Devuelve la suma de su fuerza (a partir del método de Dice) y
-     * del poder de las armas
-     */
     @Override
     public float attack(){
-        return (Dice.intensity(this.getStrength())+this.sumWeapons());
+        return Dice.intensity(this.getStrength())+this.sumWeapons();
     }
     
   
     @Override
     protected float defensiveEnergy(){
-        return (Dice.intensity(this.getIntelligence())+this.sumShields());
+        return Dice.intensity(this.getIntelligence())+this.sumShields();
     }
     
    

@@ -30,13 +30,13 @@ public class Game {
     
     public Game(int nPlayers) {
         // Creamos los jugadores
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<>();
         for(int i=0; i<=nPlayers; i++) {
             this.players.add(new Player( Character.forDigit(i, 10), Dice.randomIntelligence(), Dice.randomStrength()));
         }
         
         // Creamos los monstruos
-        this.monsters = new ArrayList<Monster>();
+        this.monsters = new ArrayList<>();
         for(int i=0; i<=3; i++) {
             this.monsters.add(new Monster("Monstruo " + i, Dice.randomIntelligence(), Dice.randomStrength()));
         }
@@ -78,43 +78,33 @@ public class Game {
     
    public boolean nextStep (Directions preferredDirection){
         
-        // Reseteamos el log
         log = "";
 
         if (currentPlayer.dead()){
-            // Si el jugador está muerto, se ve si se resucita o no
             manageResurrection();
         }
         else{
 
-            // Se obtiene la dirección real a la que se mueve el jugador.
-            // Si no se puede mover, se indica en el log
             Directions direction = this.actualDirection(preferredDirection);
             if (direction != preferredDirection){
                 logPlayerNoOrders();
             }
 
-            // Se mueve al jugador y se obtiene el monstruo que haya en la casilla
             Monster monster = this.labyrinth.putPlayer(direction, currentPlayer);
 
-
-            // Se estudia si hay un monstruo en la casilla a la que se ha movido el jugador
             if (monster == null){
                 logNoMonster();
             }
             else{
-                // Se lleva a cabo el combate
                 GameCharacter winner = combat(monster);
-                // Se gestiona la recompensa
                 manageReward(winner);
-            }// if (monster == null)
+            }
             
             
-        }// if (currentPlayer.dead())
-
+        }
 
         boolean endGame = finished();
-        if (!endGame)   // Si no ha finalizado el juego, se pasa al siguiente
+        if (!endGame)  
             nextPlayer();
 
         return endGame;
@@ -211,7 +201,7 @@ public class Game {
     
     private void manageReward(GameCharacter winner) {
         if (winner == GameCharacter.PLAYER) {
-            currentPlayer.reciveReward();
+            currentPlayer.receiveReward();
             logPlayerWon();
         }
         else {

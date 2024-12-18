@@ -171,9 +171,9 @@ public class Dice {
     public static Directions nextStep(Directions preference, ArrayList<Directions> validMoves, float intelligence) {
         Directions rdo = preference;
         
-          if(Dice.randomIntelligence()>intelligence){
-            int indice=generator.nextInt(validMoves.size());
-            rdo=validMoves.get(indice);          
+          if(Dice.randomIntelligence() > intelligence){
+            int i = generator.nextInt(validMoves.size());
+            rdo=validMoves.get(i);          
         }
         
         return rdo;
